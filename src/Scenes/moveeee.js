@@ -7,6 +7,8 @@ class moveeee extends Phaser.Scene {
         this.bodyX = 400;
         this.bodyY = 350;
 
+        this.bullets = [];
+
     }
 
     // Use preload to load art and sound assets before the scene starts running.
@@ -43,11 +45,14 @@ class moveeee extends Phaser.Scene {
             my.sprite.body.x += 7;
             if (my.sprite.body.x >= game.config.width) my.sprite.body.x = game.config.width;
         }
-        if (!my.sprite.sword && this.spaceKey.isDown) {
+        if (this.spaceKey.isDown) {
             my.sprite.sword = this.add.sprite(my.sprite.body.x, my.sprite.body.y - 50, "sword");
+            this.bullets.push(my.sprite.sword);
         }
-        if (my.sprite.sword) {
-            my.sprite.sword.y -= 8
+        if (this.bullets.length > 0) {
+            for (let bullet of this.bullets) {
+                bullet.y -= 8;
+            }
         }
         if (my.sprite.sword && my.sprite.sword.y <= -60) {
             my.sprite.sword = null;
